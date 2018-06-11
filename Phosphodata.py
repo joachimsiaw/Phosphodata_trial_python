@@ -10,6 +10,7 @@ This is a temporary script file.
 
 # import libraries
 import pandas
+import pandas as pd
 import numpy as np
 # define file path and save path to a variable
 filepath = 'C:/Users/joach_000/OneDrive/Course/Python/Phospho data_python trial.csv'
