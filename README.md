@@ -1,8 +1,7 @@
-# Phosphodata_trial_python
-Phosphoproteomics data: 
+# V. leishmania 
+Data represnts Differentially expressed (DE) genes in v. between V. leishmania patients and controls
 
-#This script analyses  the log fold changes in the phosphorylation status of proteins.
+#This script analyses  the fold change in gene expression
+#Prints out separate lists of down and up regulated genes
+#plots graph of genes vs fold change
 
-#The script prints separate lists of proteins whose phosphorylation status decreased or increased upon treatment (fold change < or > 0).
-
-# The script then prints list of proteins with fold change  greater than -1.5 or 1.5
