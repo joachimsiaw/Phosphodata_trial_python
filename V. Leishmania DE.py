@@ -78,6 +78,20 @@ top10_merge.plot.bar(x='Gene_name', y='Fold_change', color='b' )
 
 file.plot.hexbin(x='Fold_change', y='FDR', gridsize=20)
 
-file_upregulated = file[(file['Fold_change'] > 0).all('Fold_change')]
+#Extract separate lists of all down and up regulated genes from file
+
+file_downregulated=file[file['Fold_change']<0]  
+print(file_downregulated)
+file_upregulated=file[file['Fold_change']>0]  
+print(file_upregulated)
+
+#create a dictionary of the lists generated
+
+pieces={'x': file_upregulated, 'y': file_downregulated}
+
+#concatenate pieces
+file2=pd.concat(pieces)
+print(file2)
+
 # =============================================================================
 
