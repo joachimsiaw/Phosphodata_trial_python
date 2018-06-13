@@ -50,7 +50,7 @@ print(top10_downregulated)
 top10_upregulated = file_sorted.tail(10)
 print (top10_upregulated)
  
-#sort top10_upregulated by fold change descending order to have the most upreulated gene on top
+#sort top10_upregulated by fold change in descending order to have the most upreulated gene on top
 
 top10_upregulated_sorted = top10_upregulated.sort_values(by=['Fold_change'], ascending=False)
 print(top10_upregulated_sorted)
@@ -72,5 +72,12 @@ print(top10_merge)
 #Plot graph of top 10 most up and ttop 10 most down regulated gene
 
 top10_merge.plot.bar(x='Gene_name', y='Fold_change', color='b' )
+
+
+# Hexaginal bin plot of entire dataframe to view distibution of FDR
+
+file.plot.hexbin(x='Fold_change', y='FDR', gridsize=20)
+
+file_upregulated = file[(file['Fold_change'] > 0).all('Fold_change')]
 # =============================================================================
 
