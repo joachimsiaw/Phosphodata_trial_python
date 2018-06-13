@@ -55,6 +55,22 @@ print (top10_upregulated)
 top10_upregulated_sorted = top10_upregulated.sort_values(by=['Fold_change'], ascending=False)
 print(top10_upregulated_sorted)
 
+# Extract Gene_name and Fold_change columns in the top10 files 
 
+top10_downregulated_extract = top10_downregulated[['Gene_name', 'Fold_change']]
+print(top10_downregulated_extract)
+
+top10_upregulated_extract = top10_upregulated_sorted[['Gene_name', 'Fold_change']]
+print(top10_upregulated_extract)
+
+#Merge top10 extract files from both up and downregulated dataframes into one data frame
+
+merge = [top10_upregulated_extract, top10_downregulated_extract]
+top10_merge = pd.concat(merge, ignore_index=True)
+print(top10_merge)
+
+#Plot graph of top 10 most up and ttop 10 most down regulated gene
+
+top10_merge.plot.bar(x='Gene_name', y='Fold_change', color='b' )
 # =============================================================================
 
