@@ -10,7 +10,8 @@ This is a temporary script file.
 
 # import libraries
 import pandas as pd
-import numpy as np
+import matplotlib.pyplot as plt
+
 # define file path and save path to a variable
 filepath = 'C:/Users/joach_000/OneDrive/Course/Python/V. Leishmania DE genes.csv'
 
@@ -29,11 +30,50 @@ print(file.describe())
 
 # Extract names of genes with Fold change >= abs 1.5
 
-file_foldchange = file[abs(file.Fold_change) >= 1.5]
+fold_change_greater = file[abs(file.Fold_change) >= 1.5]
 
-# Plot a graph of all genes with fold change >= abs 1.5
+Gene_extract = [fold_change_greater['Gene_name'], fold_change_greater['Fold_change']]
+Gene_extract_df= pd.concat(Gene_extract, axis=1)
 
-file_foldchange.plot.bar()
+# Plot a graph of all genes with fold change >= abs 1.5 in pd
+
+Gene_extract_df.plot.bar()
+
+# Hexaginal bin plot of entire dataframe to view distribution of FDR
+
+file.plot.hexbin(x='Fold_change', y='FDR', gridsize=20)
+
+#Extract separate lists of all down and up regulated DE genes from file
+
+file_downregulated=file[file['Fold_change']<0]  
+print(file_downregulated)
+file_upregulated=file[file['Fold_change']>0]  
+print(file_upregulated)
+
+
+#Counting the number of up and downregulated DE genes in file
+
+number_of_up_genes=(file_upregulated['Fold_change'].count())
+print(number_of_up_genes)
+number_of_down_genes=(file_downregulated['Fold_change'].count())
+print(number_of_down_genes)
+
+#Making a list of the gene counts
+Number_of_genes=[number_of_up_genes,number_of_down_genes]
+Type_of_gene_regulation=['upregulated', 'downregulated']
+colors=['green', 'blue']
+
+#Ploting a bar chart of DE genes with matplot library
+plt.bar(Type_of_gene_regulation,Number_of_genes,color=colors)
+plt.ylabel('Number of genes')
+plt.title('Barchart-Distribution of number of DE genes in V.leishmania patients')
+plt.show()
+
+#Plot of pie chat of DE genes
+plt.pie(Number_of_genes, colors=colors, labels=Number_of_genes)
+plt.legend(Type_of_gene_regulation)
+plt.title('Piechart-Distribution of number of DE genes in V.leishmania patients')
+plt.show()
 
 # sorting the data by fold change 
 
@@ -69,29 +109,15 @@ merge = [top10_upregulated_extract, top10_downregulated_extract]
 top10_merge = pd.concat(merge, ignore_index=True)
 print(top10_merge)
 
-#Plot graph of top 10 most up and ttop 10 most down regulated gene
+#Plot graph of top 10 most up and top 10 most down regulated gene with pd
 
 top10_merge.plot.bar(x='Gene_name', y='Fold_change', color='b' )
 
-
-# Hexaginal bin plot of entire dataframe to view distibution of FDR
-
-file.plot.hexbin(x='Fold_change', y='FDR', gridsize=20)
-
-#Extract separate lists of all down and up regulated genes from file
-
-file_downregulated=file[file['Fold_change']<0]  
-print(file_downregulated)
-file_upregulated=file[file['Fold_change']>0]  
-print(file_upregulated)
-
-#create a dictionary of the lists generated
-
-pieces={'x': file_upregulated, 'y': file_downregulated}
-
-#concatenate pieces
-file2=pd.concat(pieces)
-print(file2)
-
-# =============================================================================
-
+#Plot graph of top 10 most up and top 10 most down regulated gene with matplotlib
+genename=top10_merge['Gene_name']
+foldchange=top10_merge['Fold_change']
+plt.bar(genename,foldchange,color='green')
+plt.xlabel('Gene name', fontsize=16)
+plt.ylabel('Fold change', fontsize=16)
+plt.title('Top 20 most DE genes', fontsize=20)
+plt.show()
